@@ -1,0 +1,43 @@
+#include <bits/stdc++.h>
+#define fori(i, s, e) for (long long int i = s; i < e; i++)
+#define forei(i, s, e) for (long long int i = s; i <= e; i++)
+#define ford(i, s, e) for (long long int i = s; i > e; i--)
+#define fored(i, s, e) for (long long int i = s; i >= e; i--)
+#define fastread() (ios_base::sync_with_stdio(0), cin.tie(0))
+#define endl "\n"
+#define ll long long int
+using namespace std;
+
+class Solution
+{
+public:
+    void subs(vector<int> &nums, vector<vector<int>> &res, vector<int> &tmp, int idx)
+    {
+        int l = nums.size();
+        res.push_back(tmp);
+        for (int i = idx; i < l; i++)
+        {
+            if (i != idx && nums[i] == nums[i - 1])
+                continue;
+            tmp.push_back(nums[i]);
+            subs(nums, res, tmp, i + 1);
+            tmp.pop_back();
+        }
+        return;
+    }
+    vector<vector<int>> subsetsWithDup(vector<int> &nums)
+    {
+        vector<int> sub;
+        sort(nums.begin(), nums.end());
+        vector<vector<int>> res;
+        subs(nums, res, sub, 0);
+        return res;
+    }
+};
+
+int main()
+{
+    fastread();
+
+    return 0;
+}

@@ -1,0 +1,22 @@
+class Solution {
+private:
+    void solve(const vector<int>& nums, vector<int> out, vector<vector<int>>& res, int target, int i){
+        if(target < 0) return;
+        if(target == 0){
+            res.push_back(out); return;
+        }
+        
+        for(int a = i; a < nums.size(); a++){
+            out.push_back(nums[a]);
+            solve(nums, out, res, target - nums[a], a);
+            out.pop_back();
+        }
+    }
+public:
+    vector<vector<int>> combinationSum(vector<int>& candidates, int target) {
+        vector<vector<int>> res;
+        vector<int> out;
+        solve(candidates, out, res, target, 0);
+        return res;
+    }
+};
