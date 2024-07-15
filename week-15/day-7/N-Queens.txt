@@ -1,0 +1,75 @@
+class Solution
+{
+public:
+    bool isValid(vector<string> &temp, int i, int j)
+    {
+        for (int k = 0; k < temp.size(); k++)
+        {
+            if (temp[k][j] == 'Q' || temp[i][k] == 'Q')
+            {
+                return false;
+            }
+        }
+        int a = i, b = j;
+        while (a >= 0 && b < temp.size())
+        {
+            if (temp[a][b] == 'Q')
+            {
+                return false;
+            }
+            a--;
+            b++;
+        }
+        int c = i, d = j;
+        while (c >= 0 && d >= 0)
+        {
+            if (temp[c][d] == 'Q')
+            {
+                return false;
+            }
+            c--;
+            d--;
+        }
+        return true;
+    }
+    bool solve(int i, vector<string> &temp, vector<vector<string>> &res)
+    {
+        if (i == temp.size())
+        {
+            res.push_back(temp);
+            return false;
+        }
+
+        for (int j = 0; j < temp.size(); j++)
+        {
+            if (isValid(temp, i, j))
+            {
+                temp[i][j] = 'Q';
+                bool remaining = solve(i + 1, temp, res);
+                if (remaining == true)
+                {
+                    return true;
+                }
+                temp[i][j] = '.';
+            }
+        }
+        return false;
+    }
+    vector<vector<string>> solveNQueens(int n)
+    {
+        vector<vector<string>> res;
+        vector<string> temp;
+        string ans = "";
+        for (int i = 0; i < n; i++)
+        {
+            ans += ".";
+        }
+        for (int i = 0; i < n; i++)
+        {
+            temp.push_back(ans);
+        }
+        int i = 0;
+        solve(i, temp, res);
+        return res;
+    }
+};
